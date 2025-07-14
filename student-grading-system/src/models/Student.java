@@ -1,8 +1,11 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
+import java.util.AbstractMap.SimpleEntry;
 
 public class Student {
+
     private String name;
     private int indexNumber;
     private LocalDate dob;
@@ -12,7 +15,14 @@ public class Student {
 
     public Student(String studentName, String dateOfBirth) {
         this.name = studentName;
-        this.dob = this.formatDob(dateOfBirth);
+        this.dob = Student.formatDob(dateOfBirth);
+        Student.lastStudentIndexNumber += 1;
+        this.indexNumber = Student.lastStudentIndexNumber;
+    }
+
+    public Student(String studentName, LocalDate dateOfBirth) {
+        this.name = studentName;
+        this.dob = dateOfBirth;
         Student.lastStudentIndexNumber += 1;
         this.indexNumber = Student.lastStudentIndexNumber;
     }
@@ -21,7 +31,7 @@ public class Student {
         return this.indexNumber;
     }
 
-    public String getDateOfBirth(){
+    public String getDateOfBirth() {
         return this.dob.format(Student.FORMATTER);
     }
 
@@ -53,7 +63,7 @@ public class Student {
         this.name = studentName;
     }
 
-    private LocalDate formatDob(String dob) {
+    private static LocalDate formatDob(String dob) {
         try {
             LocalDate dobParsed = LocalDate.parse(dob, FORMATTER);
             if (dobParsed.isAfter(LocalDate.now())) {
@@ -63,6 +73,41 @@ public class Student {
         } catch (DateTimeParseException exception) {
             throw new IllegalArgumentException("Date of birth must be of format dd-MM-yyyy");
         }
+    }
+
+    public static SimpleEntry<String, LocalDate> readStudentInfo() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        Boolean isNameValid = false;
+        Boolean isDobValid = false;
+
+        String studentName = "";
+        LocalDate dob = LocalDate.now();
+
+        while (!isNameValid) {
+            System.out.println("Enter Student Name");
+            studentName = scanner.nextLine();
+            if (studentName.length() > 1) {
+                isNameValid = true;
+            } else {
+                System.out.println("Student name cannot be empty or a single character");
+            }
+        }
+
+        while (!isDobValid) {
+            System.out.println("Enter Student Date of Birth (dd-MM-yyyy)");
+            String dobInput = scanner.nextLine();
+            try {
+                dob = Student.formatDob(dobInput);
+                isDobValid = true;
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+
+        return new SimpleEntry<>(studentName, dob);
+
     }
 
 }
