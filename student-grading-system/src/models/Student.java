@@ -11,6 +11,7 @@ public class Student {
     private LocalDate dob;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+   
     private static int lastStudentIndexNumber = 0;
 
     public Student(String studentName, String dateOfBirth) {
@@ -25,6 +26,7 @@ public class Student {
         this.dob = dateOfBirth;
         Student.lastStudentIndexNumber += 1;
         this.indexNumber = Student.lastStudentIndexNumber;
+        
     }
 
     public int getIndexNumber() {
@@ -63,6 +65,7 @@ public class Student {
         this.name = studentName;
     }
 
+   
     private static LocalDate formatDob(String dob) {
         try {
             LocalDate dobParsed = LocalDate.parse(dob, FORMATTER);
@@ -77,7 +80,6 @@ public class Student {
 
     public static SimpleEntry<String, LocalDate> readStudentInfo(Scanner scanner) {
 
-        
         Boolean isNameValid = false;
         Boolean isDobValid = false;
 
@@ -105,7 +107,6 @@ public class Student {
             }
         }
 
-    
         return new SimpleEntry<>(studentName, dob);
 
     }
