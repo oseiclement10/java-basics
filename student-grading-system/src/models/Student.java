@@ -75,10 +75,9 @@ public class Student {
         }
     }
 
-    public static SimpleEntry<String, LocalDate> readStudentInfo() {
+    public static SimpleEntry<String, LocalDate> readStudentInfo(Scanner scanner) {
 
-        Scanner scanner = new Scanner(System.in);
-
+        
         Boolean isNameValid = false;
         Boolean isDobValid = false;
 
@@ -88,7 +87,7 @@ public class Student {
         while (!isNameValid) {
             System.out.println("Enter Student Name");
             studentName = scanner.nextLine();
-            if (studentName.length() > 1) {
+            if (studentName.trim().length() > 1) {
                 isNameValid = true;
             } else {
                 System.out.println("Student name cannot be empty or a single character");
@@ -106,6 +105,7 @@ public class Student {
             }
         }
 
+    
         return new SimpleEntry<>(studentName, dob);
 
     }

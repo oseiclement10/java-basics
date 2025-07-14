@@ -26,9 +26,10 @@ public class Main {
                         break;
 
                     case 1:
-                        SimpleEntry<String, LocalDate> studentInfo = Student.readStudentInfo();
+                        // registration
+                        SimpleEntry<String, LocalDate> studentInfo = Student.readStudentInfo(scanner);
                         Student student = new Student(studentInfo.getKey(), studentInfo.getValue());
-                        System.out.println("Registered " + student.getName() + " Succesfully ! .");
+                        System.out.println("Registered " + student + " Succesfully ! .");
                         break;
 
                     default:
@@ -38,12 +39,12 @@ public class Main {
 
             } catch (NumberFormatException invalidArg) {
                 System.out.println("Please enter a number from the menu only");
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
 
         }
+        scanner.close();
 
     }
 
