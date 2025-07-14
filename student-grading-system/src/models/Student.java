@@ -3,31 +3,31 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Student {
-    private String _name;
-    private int _indexNumber;
-    private LocalDate _dob;
+    private String name;
+    private int indexNumber;
+    private LocalDate dob;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private static int lastStudentIndexNumber;
+    private static int lastStudentIndexNumber = 0;
 
     public Student(String studentName, String dateOfBirth) {
-        this._name = studentName;
-        this._dob = this.formatDob(dateOfBirth);
+        this.name = studentName;
+        this.dob = this.formatDob(dateOfBirth);
         Student.lastStudentIndexNumber += 1;
-        this._indexNumber = Student.lastStudentIndexNumber;
+        this.indexNumber = Student.lastStudentIndexNumber;
     }
 
     public int getIndexNumber() {
-        return this._indexNumber;
+        return this.indexNumber;
     }
 
     public String getDateOfBirth(){
-        return this._dob.format(Student.FORMATTER);
+        return this.dob.format(Student.FORMATTER);
     }
 
     @Override
     public String toString() {
-        return this._name + "_" + this._indexNumber;
+        return this.name + "_" + this.indexNumber;
     }
 
     @Override
@@ -46,11 +46,11 @@ public class Student {
     }
 
     public String getName() {
-        return this._name;
+        return this.name;
     }
 
     public void setName(String studentName) {
-        this._name = studentName;
+        this.name = studentName;
     }
 
     private LocalDate formatDob(String dob) {
