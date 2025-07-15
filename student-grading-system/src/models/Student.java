@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -11,7 +12,7 @@ public class Student {
     private LocalDate dob;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-   
+
     private static int lastStudentIndexNumber = 0;
 
     public Student(String studentName, String dateOfBirth) {
@@ -26,7 +27,10 @@ public class Student {
         this.dob = dateOfBirth;
         Student.lastStudentIndexNumber += 1;
         this.indexNumber = Student.lastStudentIndexNumber;
-        
+    }
+
+    public static int getLastIndexNumber() {
+        return Student.lastStudentIndexNumber;
     }
 
     public int getIndexNumber() {
@@ -37,26 +41,6 @@ public class Student {
         return this.dob.format(Student.FORMATTER);
     }
 
-    @Override
-    public String toString() {
-        return this.name + "_" + this.indexNumber;
-    }
-
-    @Override
-    public boolean equals(Object compared) {
-        if (this == compared)
-            return true;
-        if (!(compared instanceof Student))
-            return false;
-        Student comparedStudent = (Student) compared;
-        return comparedStudent.getIndexNumber() == this.getIndexNumber();
-    }
-
-    @Override
-    public int hashCode() {
-        return this.getIndexNumber();
-    }
-
     public String getName() {
         return this.name;
     }
@@ -65,7 +49,6 @@ public class Student {
         this.name = studentName;
     }
 
-   
     private static LocalDate formatDob(String dob) {
         try {
             LocalDate dobParsed = LocalDate.parse(dob, FORMATTER);
@@ -109,6 +92,69 @@ public class Student {
 
         return new SimpleEntry<>(studentName, dob);
 
+    }
+
+    public static Student findStudentByIndex(int inputIndex, ArrayList<Student> studentList) {
+        for (Student std : studentList) {
+            if (std.getIndexNumber() == inputIndex) {
+                return std;
+            }
+        }
+        return null;
+    }
+
+    public static Student getStudentByIndexInput(Scanner scanner, ArrayList<Student> studentList) {
+        Boolean isIndexValid = false;
+        int studentIndex = 0;
+        Student student = null;
+
+        while (!isIndexValid) {
+            System.out.println("Enter student index number");
+            String input = scanner.nextLine();
+            try {
+                studentIndex = Integer.parseInt(input);
+                if (studentIndex > Student.getLastIndexNumber()) {
+                    throw new IllegalArgumentException(
+                            "Student with index number : " + studentIndex + "   does not exist");
+                }
+
+                Student result = findStudentByIndex(studentIndex, studentList);
+                if (result == null) {
+                    throw new IllegalArgumentException(
+                            "Student with index number : " + studentIndex + "   does not exist");
+                }
+                student = result;
+                isIndexValid = true;
+
+            } catch (NumberFormatException invalidNumberException) {
+                System.out.println("Index number must be numeric ");
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+
+        return student;
+    }
+
+    // overides for search and output
+    @Override
+    public String toString() {
+        return this.name + "_" + this.indexNumber;
+    }
+
+    @Override
+    public boolean equals(Object compared) {
+        if (this == compared)
+            return true;
+        if (!(compared instanceof Student))
+            return false;
+        Student comparedStudent = (Student) compared;
+        return comparedStudent.getIndexNumber() == this.getIndexNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getIndexNumber();
     }
 
 }

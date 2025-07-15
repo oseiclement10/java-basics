@@ -77,6 +77,38 @@ public class Stage {
         return stageName;
     }
 
+    public static Stage findStageByName(String inputName, ArrayList<Stage> stageList) {
+        for (Stage stg : stageList) {
+            if (stg.getName().equals(inputName)) {
+                return stg;
+            }
+        }
+        return null;
+    }
+
+    public static Stage getStageByInput(Scanner scanner, ArrayList<Stage> stageList) {
+        Boolean isNameValid = false;
+        Stage stage = null;
+
+        while (!isNameValid) {
+            System.out.println(" Enter stage name : ");
+            String input = scanner.nextLine();
+            try {
+                Stage result = findStageByName(input, stageList);
+                if (result == null) {
+                    throw new IllegalArgumentException(
+                            "Stage with name : " + input + "   does not exist");
+                }
+                stage = result;
+                isNameValid = true;
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+
+        return stage;
+    }
+
     @Override
     public String toString() {
         return this.name;
