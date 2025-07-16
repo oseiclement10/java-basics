@@ -134,14 +134,10 @@ public class Main {
     public static void addNewCourse(Scanner scanner) {
         printLineBreak();
         try {
-            String stageInfo = Stage.readStageInfo(scanner);
-            Stage stage = new Stage(stageInfo);
-
-            stageList.add(stage);
-            System.out.println("Stage added succesfully !");
+          
 
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+           
         }
     }
 

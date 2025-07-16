@@ -1,12 +1,12 @@
 public class Course {
     private String name;
     private String code;
-    private String classId;
+    private String stageName;
     
-    public Course(String className, String classCode, String classId){
+    public Course(String className, String classCode, String stageName){
         this.name = className;
         this.code = classCode;
-        this.classId = classId;
+        this.stageName = stageName;
     }
 
     public String getName(){
@@ -21,11 +21,11 @@ public class Course {
         return this.code;
     }
 
-    public void setClassId(String classId){
-        this.classId = classId;
+    public void setstageName(String stageName){
+        this.stageName = stageName;
     }
 
-    public String getClassId(){
-        return this.classId;
+    public String getstageName(){
+        return this.stageName;
     }
 }
